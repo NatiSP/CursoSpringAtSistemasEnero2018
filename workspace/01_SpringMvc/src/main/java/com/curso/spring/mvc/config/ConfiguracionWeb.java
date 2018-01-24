@@ -1,14 +1,18 @@
 package com.curso.spring.mvc.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceView;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
@@ -57,5 +61,24 @@ public class ConfiguracionWeb implements WebMvcConfigurer{
 	@Bean
 	public ViewResolver internalResourceViewResolver() {
 		return new InternalResourceViewResolver("/WEB-INF/jsp/",".jsp");
+	}
+	
+	@Bean
+	public MessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("/WEB-INF/mensajes");
+		return messageSource;
+	}
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry interceptorRegistry) {
+		WebMvcConfigurer.super.addInterceptors(interceptorRegistry);
+		interceptorRegistry.addInterceptor(localeChangeInterceptor());
+	}
+
+	
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		return new LocaleChangeInterceptor();
 	}
 }

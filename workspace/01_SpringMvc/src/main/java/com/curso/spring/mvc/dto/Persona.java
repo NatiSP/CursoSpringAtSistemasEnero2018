@@ -1,8 +1,17 @@
 package com.curso.spring.mvc.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
+
 public class Persona {
 
+	@NotNull
 	private int id;
+	@NotEmpty
+	@Length(min=2)
 	private String nombre;
 	private String apellidos;
 	private String sexo;

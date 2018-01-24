@@ -1,11 +1,13 @@
 package com.curso.spring.mvc.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.curso.spring.mvc.dto.Persona;
 
@@ -25,7 +27,7 @@ public class FormControlador {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String procesarFormulario(@ModelAttribute Persona persona) {
+	public String procesarFormulario(@Valid @ModelAttribute Persona persona, Errors errores) {
 		
 		
 		return "formulario";
